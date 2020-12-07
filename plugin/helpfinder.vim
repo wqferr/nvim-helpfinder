@@ -1,5 +1,5 @@
 if exists('g:loaded_helpfinder')
-    " finish
+    finish
 endif
 
 function! helpfinder#search(term)
@@ -28,8 +28,13 @@ function! helpfinder#expand_cword()
     return strcharpart(getline('.'), cword_start, cword_end-cword_start)
 endfunction
 
+function! helpfinder#cursor_lookup()
+    let cword = helpfinder#expand_cword()
+    call helpfinder#search(cword)
+endfunction
+
 if !exists('g:helpfinder_nodefine_maps')
-    " TODO create maps like K or <leader>K (tbd)
+    nmap <silent> <leader>K <cmd>call helpfinder#cursor_lookup()<cr>
 endif
 
 let g:loaded_helpfinder = 1
